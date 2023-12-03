@@ -18,6 +18,11 @@ const Price = ({ products }: {products:ProductType}) => {
   
   const {addToCart} = useCartStore()
 
+
+  useEffect(()=>{
+    useCartStore.persist.rehydrate()
+  },[])
+
   useEffect(() => {
     if(products.options?.lenght){
       setTotal(
