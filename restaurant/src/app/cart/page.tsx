@@ -1,15 +1,47 @@
 'use client'
 import { useCartStore } from "@/utils/store";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 
 const CartPage = () => {
   
   const {products,totalItems,totalPrice,removeFromCart} = useCartStore()
+debugger
+  const router = useRouter();
+  const { data: session } = useSession();
+
+
   useEffect(()=>{
     useCartStore.persist.rehydrate()
   },[])
+
+  // const handleCheckout = async () => {
+  //   if (!session) {
+  //     router.push("/login");
+  //   } else {
+  //     try {
+  //       const res = await fetch("http://localhost:3000/api/orders", {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({
+  //           price: totalPrice,
+  //           products,
+  //           status: "Not Paid!",
+  //           userEmail: session.user.email,
+  //         }),
+  //       });
+  //       const data =await res.json()
+  //       router.push(`/pay/${data.id}`)
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // };
+
+  
   return (
     <div className="h-[calc(100vh-6rem)] md:h-[calc(100vh-9rem)] flex flex-col text-red-500 lg:flex-row">
       {/* PRODUCTS CONTAINER */}
@@ -20,7 +52,7 @@ const CartPage = () => {
         <div className="flex items-center justify-between mb-4" key={item.id}>
            {item.img &&  <Image src={item.img} alt="" width={100} height={100} /> }
           <div className="">
-            <h1 className="uppercase text-xl font-bold">{item?.title}</h1>
+            <h1 className="uppercase text-xl font-bold">{item?.title} X {item?.quantity}</h1>
             <span>{item?.optionTitle}</span>
           </div>
           <h2 className="font-bold">${item?.price}</h2>
