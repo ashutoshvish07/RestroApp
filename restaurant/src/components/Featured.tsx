@@ -23,7 +23,7 @@ const Featured = async () => {
   const featuredProducts:Product = await getData()
 
   return (
-    <div className="w-screen overflow-x-scroll text-red-500">
+    <div className=" overflow-x-scroll no-scrollbar text-red-500">
       {/* WRAPPER */}
       <div className="w-max flex">
         {/* SINGLE ITEM */}
